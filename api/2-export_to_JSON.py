@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ Script that returns 'to-do list' info for a given employee ID """
 
 
