@@ -1,35 +1,33 @@
 #!/usr/bin/python3
-""" Script that exports data for all employees in the JSON format """
+"""Script to export data in JSON format"""
 
 import json
 import requests
 
+API_URL = 'https://jsonplaceholder.typicode.com'
 
-API_URL = "https://jsonplaceholder.typicode.com/"
+if __name__ == '__main__':
 
-if __name__ == "__main__":
+    users = requests.get(f'{API_URL}/users').json()
+    todo_list = requests.get(f"{API_URL}/todos").json()
 
-    employees = requests.get('{}users'.format(API_URL)).json()
+    json_filename = "todo_all_employees.json"
 
-    todos_list = requests.get("{}todos".format(API_URL)).json()
+    data = {}
 
-    all_employees_data = {}
+    for task in todo_list:
 
-    for employee in employees:
-        user_id = employee.get("id")
-        username = employee.get("username")
+        user_id = task['userId']
 
-        employee_tasks = [
-            {
-                "username": username,
-                "task": task["title"],
-                "completed": task["completed"],
-            }
-            for task in todos_list if task["userId"] == user_id
-        ]
-        all_employees_data[user_id] = employee_tasks
+        if user_id not in data:
+            data[user_id] = []
 
-    json_file = "todo_all_employees.json"
-
-    with open(json_file, "w") as json_file:
-        json.dump(all_employees_data, json_file)
+        data[user_id].append({
+            "username": next(user['username']
+                             for user in users
+                             if user['id'] == user_id),
+            "task": task['title'],
+            "completed": task['completed']
+        })
+    with open(json_filename, 'w') as file:
+        json.dump(data, file)
