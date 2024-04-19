@@ -1,10 +1,9 @@
 #!/usr/bin/python3
-""" Script that returns 'to-do list' info for a given employee ID """
+""" Script that exports data in the CSV format """
 
-
+import csv
 import requests
 import sys
-import csv
 
 API_URL = "https://jsonplaceholder.typicode.com/"
 

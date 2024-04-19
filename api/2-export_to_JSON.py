@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-""" Script that returns 'to-do list' info for a given employee ID """
+""" Script that exports data in the JSON format """
 
-
+import json
 import requests
 import sys
-import json
 
 API_URL = "https://jsonplaceholder.typicode.com/"
 
 if __name__ == "__main__":
+
     employee_id = sys.argv[1]
 
     employee = requests.get(API_URL + "users/{}".format(employee_id)).json()
